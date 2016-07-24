@@ -4,19 +4,23 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.playnd.okb.Fragment.ExchangeFragment;
 import com.playnd.okb.Fragment.SettingFragment;
 import com.playnd.okb.Fragment.TraceFriendFragment;
+import com.playnd.okb.Util.Adapter.FragmentTabAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -103,6 +107,10 @@ public class MainActivity extends AppCompatActivity
         String title = "";
         String analyticsViewName = "";
 
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        FragmentTabAdapter tabAdapter = null;
+
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
@@ -110,14 +118,33 @@ public class MainActivity extends AppCompatActivity
             fragment = new ExchangeFragment();
             title = "환율계산";
             homeFrag = true;
+
+            // Get the ViewPager and set it's PagerAdapter so that it can display items
+            viewPager.setVisibility(View.VISIBLE);
+
+            tabAdapter = new FragmentTabAdapter(getSupportFragmentManager(), MainActivity.this);
+            tabAdapter.addFragment(new ExchangeFragment(), "환율계산");
+            tabAdapter.addFragment(new ExchangeFragment(), "히스토리");
+
+            //viewPager.setAdapter(new FragmentTabAdapter(getSupportFragmentManager(), MainActivity.this));
+            viewPager.setAdapter(tabAdapter);
+
+            // Give the TabLayout the ViewPager
+            tabLayout.setVisibility(View.VISIBLE);
+            tabLayout.setupWithViewPager(viewPager);
+
         } else if (id == R.id.nav_gallery) {
             fragment = new TraceFriendFragment();
             title = "친구 위치 추적";
             homeFrag = false;
+            tabLayout.setVisibility(View.GONE);
+            viewPager.setVisibility(View.GONE);
         } else if (id == R.id.nav_share) {
             fragment = new SettingFragment();
             title = "환경설정";
             homeFrag = false;
+            tabLayout.setVisibility(View.GONE);
+            viewPager.setVisibility(View.GONE);
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
