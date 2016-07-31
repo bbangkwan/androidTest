@@ -14,8 +14,8 @@ import java.util.List;
  * Created by ByeongKwan on 2016-07-23.
  */
 public class FragmentTabAdapter extends FragmentPagerAdapter{
-    final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "환율계산", "히스토리" };
+    //final int PAGE_COUNT = 2;
+    //private String tabTitles[] = new String[] { "환율계산", "히스토리" };
 
     private final List<Fragment> mFragments = new ArrayList<>();
     private final List<String> mFragmentTitles = new ArrayList<>();
@@ -53,30 +53,22 @@ public class FragmentTabAdapter extends FragmentPagerAdapter{
 
     /*final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "환율계산", "히스토리" };
-
     private final List<Fragment> mFragments = new ArrayList<>();
     private final List<String> mFragmentTitles = new ArrayList<>();
-
     private Context context;
-
     public FragmentTabAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }
-
-
-
     @Override
     public int getCount() {
         return PAGE_COUNT;
     }
-
     @Override
     public Fragment getItem(int position) {
         Log.d("getItem", position+"");
         return ExchangeFragment.newInstance(position+1);
     }
-
     @Override
     public CharSequence getPageTitle(int position) {
         return tabTitles[position];

@@ -3,6 +3,7 @@ package com.playnd.okb;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +30,9 @@ public class MainActivity extends AppCompatActivity
 
     private boolean homeFrag = true;
     NavigationView navigationView;
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,23 +113,24 @@ public class MainActivity extends AppCompatActivity
         String analyticsViewName = "";
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         FragmentTabAdapter tabAdapter = null;
 
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            Log.d(TAG, "ddd");
             fragment = new ExchangeFragment();
-            title = "환율계산";
+            title = "test";
             homeFrag = true;
-
+            Log.d(TAG, "qqqqqqqq");
             // Get the ViewPager and set it's PagerAdapter so that it can display items
             viewPager.setVisibility(View.VISIBLE);
 
             tabAdapter = new FragmentTabAdapter(getSupportFragmentManager(), MainActivity.this);
-            tabAdapter.addFragment(new ExchangeFragment(), "환율계산");
-            tabAdapter.addFragment(new ExchangeFragment(), "히스토리");
+            tabAdapter.addFragment(new ExchangeFragment(), "page1");
+            tabAdapter.addFragment(new ExchangeFragment(), "page2");
 
             //viewPager.setAdapter(new FragmentTabAdapter(getSupportFragmentManager(), MainActivity.this));
             viewPager.setAdapter(tabAdapter);
@@ -157,5 +163,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 }

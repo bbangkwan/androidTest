@@ -20,7 +20,7 @@ public class ExchangeFragment extends Fragment {
     private int mPage;
 
     public static ExchangeFragment newInstance(int page){
-        Log.d(TAG, page+"");
+        Log.d(TAG, "newInstance"+page+"");
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
         ExchangeFragment fragment = new ExchangeFragment();
@@ -34,6 +34,7 @@ public class ExchangeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(getArguments() == null){
             Log.d(TAG, "getArguments is empty");
+            mPage = 0;
         }else {
             Log.d(TAG, "getArguments is not empty");
             mPage = getArguments().getInt(ARG_PAGE, 0);
@@ -44,10 +45,11 @@ public class ExchangeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
-        Log.d(TAG, mPage+"");
+        Log.d(TAG, "onCreateView : "+mPage+"");
         View view = inflater.inflate(R.layout.fragment_exchange_main, container, false);
         TextView textView = (TextView) view;
         textView.setText("Fragment #" + mPage);
+        Log.d(TAG, textView.getText()+"");
         return view;
     }
 }
