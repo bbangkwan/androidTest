@@ -22,7 +22,6 @@ import android.view.View;
 import com.playnd.okb.Fragment.ExchangeFragment;
 import com.playnd.okb.Fragment.SettingFragment;
 import com.playnd.okb.Fragment.TraceFriendFragment;
-import com.playnd.okb.Util.Adapter.FragmentTabAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -112,9 +111,9 @@ public class MainActivity extends AppCompatActivity
         String title = "";
         String analyticsViewName = "";
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        FragmentTabAdapter tabAdapter = null;
+        /*viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        FragmentTabAdapter tabAdapter = null;*/
 
         int id = item.getItemId();
 
@@ -122,23 +121,25 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             Log.d(TAG, "ddd");
             fragment = new ExchangeFragment();
-            title = "test";
+            title = "환율계산/가계부";
             homeFrag = true;
             Log.d(TAG, "qqqqqqqq");
             // Get the ViewPager and set it's PagerAdapter so that it can display items
-            viewPager.setVisibility(View.VISIBLE);
 
-            tabAdapter = new FragmentTabAdapter(getSupportFragmentManager(), MainActivity.this);
-            tabAdapter.addFragment(new ExchangeFragment(), "page1");
-            tabAdapter.addFragment(new ExchangeFragment(), "page2");
+            /*
+            tabAdapter = new FragmentTabAdapter(getSupportFragmentManager());
+            tabAdapter.addFragment(new ExchangeFragment(), "환율 계산");
+            //tabAdapter.addFragment(new ExchangeFragment(), "page2");
+            tabAdapter.addFragment(new ExchangeHistoryFragment(), "가계부");
 
-            //viewPager.setAdapter(new FragmentTabAdapter(getSupportFragmentManager(), MainActivity.this));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
             viewPager.setAdapter(tabAdapter);
 
             // Give the TabLayout the ViewPager
             tabLayout.setVisibility(View.VISIBLE);
-            tabLayout.setupWithViewPager(viewPager);
-
+            viewPager.setVisibility(View.VISIBLE);
+            tabLayout.setupWithViewPager(viewPager);*/
         } else if (id == R.id.nav_gallery) {
             fragment = new TraceFriendFragment();
             title = "친구 위치 추적";
