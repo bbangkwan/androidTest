@@ -12,12 +12,12 @@
         android:orientation="horizontal"
         android:id="@+id/radioGroup">
         <RadioButton
-            android:id="@+id/krwtohkd"
+            android:id="@+id/hkdtokrw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="홍콩->한국"/>
         <RadioButton
-            android:id="@+id/hkdtokrw"
+            android:id="@+id/krwtohkd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="한국->홍콩"/>
@@ -36,7 +36,19 @@
             android:id="@+id/input_fee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/radioGroup" />
+            android:inputType="numberDecimal"
+            android:singleLine="true"
+            android:hint="금액 입력"
+            android:maxLength="100000000"/>
+        <TextView
+            android:id="@+id/change_currency_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            android:textColor="#841c1d"
+            android:textStyle="bold"
+            android:text="계산 결과 : "/>
         <Button
             android:id="@+id/change_currency"
             android:layout_width="match_parent"
@@ -50,19 +62,34 @@
         android:layout_below="@+id/change_currency_layout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="현재 저장된 홍콩 환율 : "/>
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/save_exchange_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dkdkd"/>
+            android:text="현재 저장된 홍콩 환율 : "
+            android:textSize="20sp"
+            android:textColor="#ff8623"/>
 
+        <EditText
+            android:id="@+id/now_currrency_input"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:singleLine="true"
+            android:hint="1달러당 원화 입력"
+            android:maxLength="100000000"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/store_now_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="저장"
+        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
