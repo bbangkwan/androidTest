@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.playnd.okb.Fragment.ExchangeFragment;
+import com.playnd.okb.Fragment.ExchangeMainFragment;
 import com.playnd.okb.Fragment.SettingFragment;
 import com.playnd.okb.Fragment.TraceFriendFragment;
 
@@ -29,9 +30,6 @@ public class MainActivity extends AppCompatActivity
 
     private boolean homeFrag = true;
     NavigationView navigationView;
-
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,47 +109,21 @@ public class MainActivity extends AppCompatActivity
         String title = "";
         String analyticsViewName = "";
 
-        /*viewPager = (ViewPager) findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        FragmentTabAdapter tabAdapter = null;*/
-
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-            Log.d(TAG, "ddd");
-            fragment = new ExchangeFragment();
+            fragment = new ExchangeMainFragment();
             title = "환율계산/가계부";
             homeFrag = true;
-            Log.d(TAG, "qqqqqqqq");
-            // Get the ViewPager and set it's PagerAdapter so that it can display items
-
-            /*
-            tabAdapter = new FragmentTabAdapter(getSupportFragmentManager());
-            tabAdapter.addFragment(new ExchangeFragment(), "환율 계산");
-            //tabAdapter.addFragment(new ExchangeFragment(), "page2");
-            tabAdapter.addFragment(new ExchangeHistoryFragment(), "가계부");
-
-            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-            viewPager.setAdapter(tabAdapter);
-
-            // Give the TabLayout the ViewPager
-            tabLayout.setVisibility(View.VISIBLE);
-            viewPager.setVisibility(View.VISIBLE);
-            tabLayout.setupWithViewPager(viewPager);*/
         } else if (id == R.id.nav_gallery) {
             fragment = new TraceFriendFragment();
             title = "친구 위치 추적";
             homeFrag = false;
-            tabLayout.setVisibility(View.GONE);
-            viewPager.setVisibility(View.GONE);
         } else if (id == R.id.nav_share) {
             fragment = new SettingFragment();
             title = "환경설정";
             homeFrag = false;
-            tabLayout.setVisibility(View.GONE);
-            viewPager.setVisibility(View.GONE);
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

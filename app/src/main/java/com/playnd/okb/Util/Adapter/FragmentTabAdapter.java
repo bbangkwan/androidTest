@@ -25,7 +25,6 @@ public class FragmentTabAdapter extends FragmentPagerAdapter{
     {
         mFragments.add(fragment);
         mFragmentTitles.add(title);
-        Log.d(TAG, "addFragment : "+mFragments.size()+"");
     }
 
     @Override

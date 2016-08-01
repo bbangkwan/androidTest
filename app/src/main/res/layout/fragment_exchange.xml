@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.playnd.okb.Fragment.ExchangeFragment">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup">
+        <RadioButton
+            android:id="@+id/krwtohkd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="홍콩->한국"/>
+        <RadioButton
+            android:id="@+id/hkdtokrw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="한국->홍콩"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/change_currency_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroup"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/input_fee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioGroup" />
+        <Button
+            android:id="@+id/change_currency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="환율 계산하기"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/change_currency_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 저장된 홍콩 환율 : "/>
+
+        <TextView
+            android:id="@+id/save_exchange_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dkdkd"/>
+
+    </LinearLayout>
+</RelativeLayout>
