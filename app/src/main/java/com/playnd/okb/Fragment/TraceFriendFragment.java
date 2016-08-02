@@ -1,8 +1,10 @@
 package com.playnd.okb.Fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -11,15 +13,14 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -34,6 +35,7 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback 
 
     GoogleMap googleMap;
     View view;
+    GoogleMapOptions googleMapOption;
     MapView googleMapView;
 
     static final LatLng tmp_position = new LatLng(37.56, 126.97);
@@ -52,7 +54,7 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        /*try{
+        try{
             view = inflater.inflate(R.layout.fragment_tracefriend_main, container, false);
 
             MapsInitializer.initialize(this.getActivity());
@@ -61,17 +63,13 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback 
             googleMapView.onCreate(savedInstanceState);
             googleMapView.onResume();
 
+            googleMapView.getMapAsync(this);//onMapReady랑 연결 시키는 부분분
         }catch (InflateException e){
             Log.e(TAG, "Inflate exception");
             e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
-        }*/
-        view = inflater.inflate(R.layout.fragment_tracefriend_main, container, false);
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.googleMap);
-
-        mapFragment.getMapAsync(this);
+        }
 
         return view;
     }
@@ -89,9 +87,23 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback 
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)){
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            }else{
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            }
+
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION)){
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            }else{
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            }
+
             return;
         }
         Log.d(TAG, "onMapReady");
+
         googleMap.setMyLocationEnabled(true);
 
         Marker seoul = googleMap.addMarker(new MarkerOptions().position(tmp_position).title("테스트!!!"));
@@ -106,6 +118,40 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback 
                 Log.d(TAG, location_center+"");
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d(TAG, requestCode+"");
+        switch(requestCode){
+            case 0: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 권한 허가
+                    // 해당 권한을 사용해서 작업을 진행할 수 있습니다
+                    Toast.makeText(getActivity(), "설정 완료", Toast.LENGTH_LONG).show();
+                } else {
+                    // 권한 거부
+                    // 사용자가 해당권한을 거부했을때 해주어야 할 동작을 수행합니다
+                    Toast.makeText(getActivity(), "권한 설정을 동의하세요.", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 권한 허가
+                    // 해당 권한을 사용해서 작업을 진행할 수 있습니다
+                    Toast.makeText(getActivity(), "ACCESS_COARSE_LOCATION 설정 완료", Toast.LENGTH_LONG).show();
+                } else {
+                    // 권한 거부
+                    // 사용자가 해당권한을 거부했을때 해주어야 할 동작을 수행합니다
+                    Toast.makeText(getActivity(), "ACCESS_COARSE_LOCATION 권한 설정을 동의하세요.", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 
     @Override
