@@ -6,7 +6,12 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/googleMap"
         android:layout_height="match_parent"
-        android:layout_width="0.0dip"
-        android:layout_weight="8"
-        android:name="com.google.android.gms.maps.MapFragment"/>
+        android:layout_width="wrap_content"
+        android:clickable="true"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+    <!--fragment
+        android:id="@+id/googleMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/-->
 </LinearLayout>
