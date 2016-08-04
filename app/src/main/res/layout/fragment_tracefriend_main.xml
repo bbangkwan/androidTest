@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:clickable="true"
-        map:uiZoomControls="true"
+
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
     <!--fragment
         android:id="@+id/googleMap"
