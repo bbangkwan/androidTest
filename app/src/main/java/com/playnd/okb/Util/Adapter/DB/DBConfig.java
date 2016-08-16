@@ -15,9 +15,8 @@ public class DBConfig extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql_user_info = "CREATE TABLE UserInfo ";
-        sql_user_info += "(loginUserId Text primary key, password Text, userId Text, userName Text, userHandphone Text, userEmail Text, userStatus Text, userType Text, ";
-        sql_user_info += "couponCount INTEGER, myOrderEnd INTEGER, myOrderIng INTEGER, ordercount INTEGER, point INTEGER, regDate DATETIME DEFAULT CURRENT_TIMESTAMP);";
+        String sql_user_info = "CREATE TABLE bankHistory ";
+        sql_user_info += "(seq INTEGER PRIMARY KEY AUTOINCREMENT, hkd_fee INTEGER, korea_fee INTEGER, latitude Text, longtitude Text, address Text, memo Text, useType Text, regDate DATETIME DEFAULT CURRENT_TIMESTAMP, updDate DATETIME DEFAULT CURRENT_TIMESTAMP);";
         db.execSQL(sql_user_info);
         //String sql_push_history = "CREATE TABLE PushHitory (idx INTEGER primary key autoincrement, pushTitle Text, pushContent Text, pushType Text);";
         //db.execSQL(sql_push_history);

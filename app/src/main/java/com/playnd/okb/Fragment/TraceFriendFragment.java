@@ -17,6 +17,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -102,6 +103,23 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback,
             e.printStackTrace();
         }
 
+        Button start_gps_trace = (Button) view.findViewById(R.id.start_real_trace);
+        Button stop_gps_trace = (Button) view.findViewById(R.id.stop_real_trace);
+
+        start_gps_trace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                realTimeTraceStart();
+            }
+        });
+
+        stop_gps_trace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                realTimeTraceStop();
+            }
+        });
+
         return view;
     }
 
@@ -131,18 +149,19 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback,
 
         googleMap.setMyLocationEnabled(true);
 
-        Marker seoul = googleMap.addMarker(new MarkerOptions().position(tmp_position).title("테스트!!!"));
+        /*Marker seoul = googleMap.addMarker(new MarkerOptions().position(tmp_position).title("테스트!!!"));
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tmp_position, 20));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);*/
 
-        googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener(){
+        /*googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener(){
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
                 LatLng location_center = cameraPosition.target;
                 Log.d(TAG, location_center+"");
             }
-        });
+        });*/
+
     }
 
     @Override
@@ -347,7 +366,7 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback,
             Log.d(TAG, "initlatlng : "+initlatlng);
         }
 
-        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+        //realTimeTraceSet();
     }
 
     @Override
@@ -368,6 +387,32 @@ public class TraceFriendFragment extends Fragment implements OnMapReadyCallback,
         Log.e("onMyLocationChange", d1 + "," + d2);
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(d1, d2), 18));*/
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CURRENT_LOCATION, 18));
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CURRENT_LOCATION, 14));
+        //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CURRENT_LOCATION, 14), 2000, null);
+        CameraPosition cp = new CameraPosition.Builder().target((CURRENT_LOCATION)).zoom(14).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp), 2000, null);
+    }
+
+    public void realTimeTraceStart(){
+        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+            CheckPermission();
+
+            return;
+        }
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+    }
+
+    public void realTimeTraceStop(){
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
     }
 }

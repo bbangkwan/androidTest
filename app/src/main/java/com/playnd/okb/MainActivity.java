@@ -19,10 +19,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import com.playnd.okb.Fragment.ExchangeFragment;
 import com.playnd.okb.Fragment.ExchangeMainFragment;
 import com.playnd.okb.Fragment.SettingFragment;
 import com.playnd.okb.Fragment.TraceFriendFragment;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +37,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final Fabric fabric = new Fabric.Builder(this)
+                .kits(new Crashlytics())
+                .debuggable(true)
+                .build();
+
+        Fabric.with(fabric);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,6 +61,8 @@ public class MainActivity extends AppCompatActivity
         //home menu default
         navigationView.setCheckedItem(R.id.nav_camera);
         onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_camera));
+
+        //Crashlytics.getInstance().crash();
     }
 
     @Override
